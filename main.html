@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Books Shop</title>
+    <link rel="stylesheet" href="/css/main.css" />
+  </head>
+  <body onload="onInit()">
+    <nav>
+      <img class="logo" src="./img/logo.png" alt="" />
+      <section class="book-filter">
+        <div class="sort-filter-container">
+          Sort by:
+          <select class="sort-by" onchange="onSetSortBy()">
+            <option value="">Select Sorting</option>
+            <option value="name">By Name</option>
+            <option value="maxPrice">Price</option>
+            <option value="rate">Rate</option>
+          </select>
+          <label>
+            Descending
+            <input class="sort-desc" type="checkbox" oninput="onSetSortBy()" />
+          </label>
+          <label>
+            <input
+              type="text"
+              class="filter-txt-select"
+              oninput="onSetFilterByTxt(this.value)"
+              placeholder="Search..."
+            />
+          </label>
+        </div>
+        <label>
+          price:
+          <input
+            type="range"
+            min="0"
+            max="300"
+            value="100"
+            class="filter-price-range"
+            onchange="this.title=this.value;onSetFilterBy({minPrice: this.value})"
+          />
+        </label>
+      </section>
+      <button title="Add Book" onclick="onAddBook()">Add Book</button>
+      <div class="btn-modes-container">
+        <img
+          class="presentation-modes"
+          onclick="onChangeMode('gallery')"
+          src="./img/grid.png"
+          alt=""
+        />
+        <img
+          class="presentation-modes"
+          onclick="onChangeMode('table')"
+          src="./img/table.png"
+          alt=""
+        />
+      </div>
+    </nav>
+<div class="main">
+    <h1>Welcome to Books Shop</h1>
+
+    <div class="modal">
+      <h3></h3>
+      <h4>Price <span></span></h4>
+      <h5>Book Description</h5>
+      <h6></h6>
+      <p></p>
+      <button onclick="onCloseModal()">Close</button>
+    </div>
+
+    <section class="modes-container"></section>
+
+    <table>
+        <thead>
+            <tr class="title">
+              <td>Id</td>
+              <td>Title</td>
+              <td>Price</td>
+              <td colspan="3">Actions</td>
+            </tr>
+          </thead>
+      <tbody class="books-container"></tbody>
+    </table>
+</div>
+    <div class="next-page-container">
+      <button class="next-page" onclick="onNextPage()">Next Page>></button>
+    </div>
+    <div class="pagenumbers" id="pageination"></div>
+
+    <div class="user-msg"></div>
+
+    <script src="./js/utils.js"></script>
+    <script src="./js/storage.service.js"></script>
+    <script src="./js/books-service.js"></script>
+    <script src="./js/main.js"></script>
+  </body>
+</html>
