@@ -12,29 +12,31 @@
       <img class="logo" src="./img/logo.png" alt="" />
       <section class="book-filter">
         <div class="sort-filter-container">
-          Sort by:
+          <span data-trans="Sort-by">Sort by:</span> 
           <select class="sort-by" onchange="onSetSortBy()">
-            <option value="">Select Sorting</option>
-            <option value="name">By Name</option>
-            <option value="maxPrice">Price</option>
-            <option value="rate">Rate</option>
+            <option data-trans="select" value="">Select Sorting</option>
+            <option data-trans="name" value="name">By Name</option>
+            <option data-trans="price" value="maxPrice">Price</option>
+            <option data-trans="rate" value="rate">Rate</option>
           </select>
-          <label>
+          <label data-trans="Descending-box">
             Descending
-            <input class="sort-desc" type="checkbox" oninput="onSetSortBy()" />
           </label>
+          <input class="sort-desc" type="checkbox" oninput="onSetSortBy()" />
           <label>
             <input
-              type="text"
-              class="filter-txt-select"
-              oninput="onSetFilterByTxt(this.value)"
-              placeholder="Search..."
+            type="text"
+            class="filter-txt-select"
+            oninput="onSetFilterByTxt(this.value)"
+            placeholder="Search..."
+            data-trans="text-placeholder"
             />
           </label>
         </div>
-        <label>
+        <label data-trans="filter-price">
           price:
-          <input
+        </label>
+        <input
             type="range"
             min="0"
             max="300"
@@ -42,9 +44,14 @@
             class="filter-price-range"
             onchange="this.title=this.value;onSetFilterBy({minPrice: this.value})"
           />
-        </label>
       </section>
-      <button title="Add Book" onclick="onAddBook()">Add Book</button>
+      <button data-trans="Add-Book" title="Add Book" onclick="onAddBook() ">Add Book</button>
+
+      <select onchange="onSetLang(this.value)">
+        <option value="en">English</option>
+        <option value="he">עברית</option>
+    </select>
+
       <div class="btn-modes-container">
         <img
           class="presentation-modes"
@@ -61,7 +68,7 @@
       </div>
     </nav>
 <div class="main">
-    <h1>Welcome to Books Shop</h1>
+    <h1 data-trans="title">Welcome to Books Shop</h1>
 
     <div class="modal">
       <h3></h3>
@@ -77,10 +84,10 @@
     <table>
         <thead>
             <tr class="title">
-              <td>Id</td>
-              <td>Title</td>
-              <td>Price</td>
-              <td colspan="3">Actions</td>
+              <td data-trans="Id">Id</td>
+              <td data-trans="Title">Title</td>
+              <td data-trans="Price">Price</td>
+              <td data-trans="Actions" colspan="3">Actions</td>
             </tr>
           </thead>
       <tbody class="books-container"></tbody>
@@ -93,6 +100,7 @@
 
     <div class="user-msg"></div>
 
+    <script src="./js/i18n.service.js"></script>
     <script src="./js/utils.js"></script>
     <script src="./js/storage.service.js"></script>
     <script src="./js/books-service.js"></script>

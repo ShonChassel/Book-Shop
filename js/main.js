@@ -3,6 +3,7 @@ var gMode;
 
 function onInit() {
     renderFilterByQueryStringParams()
+    doTrans()
     renderBooks()
 
 
@@ -13,7 +14,13 @@ function onInit() {
 }
 
 function renderBooks() {
-   
+
+    // אני עשיתי את זה מאמי לא להתעצבן!!
+    var btnName = ['Read', 'Update', 'Delete']
+    if (getLang() !== "en") {
+        btnName = ['קריאה', 'עדכון', 'מחיקה']
+    }
+
     // gMode = 'table'
     var elTable = document.querySelector('table')
     elTable.style.display = 'block'
@@ -25,16 +32,16 @@ function renderBooks() {
     var elBooks = document.querySelector('.books-container')
     var books = getBooks()
     console.log(books);
-
+    // if(gCurrLang === 'he')return
     var strHTML = ''
     books.map((book) => {
         strHTML += `<tr>
             <td>${book.id}</td>
             <td>${book.name}</td>
             <td>${book.price}$</td>
-            <td><button class="Read" onclick="onReadBook('${book.id}')">Read</button></td>
-            <td><button class="Update" onclick="onUpdateBook('${book.id}')">Update</button></td>
-            <td><button class="Delete" onclick="onDeleteBook('${book.id}')">Delete</button></td>
+            <td><button class="Read" onclick="onReadBook('${book.id}')">${btnName[0]}</button></td>
+            <td><button class="Update" onclick="onUpdateBook('${book.id}')">${btnName[1]}</button></td>
+            <td><button class="Delete" onclick="onDeleteBook('${book.id}')">${btnName[2]}</button></td>
         </tr>`
 
     })
@@ -48,9 +55,9 @@ function onSetFilterBy(filterBy) {
     renderMode()
 
     // query-params
-    const queryStringParams = `?minPrice=${filterBy.minPrice}`
-    const newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname + queryStringParams
-    window.history.pushState({ path: newUrl }, '', newUrl)
+    // const queryStringParams = `?minPrice=${filterBy.minPrice}`
+    // const newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname + queryStringParams
+    // window.history.pushState({ path: newUrl }, '', newUrl)
 }
 
 function onSetSortBy() {
@@ -90,7 +97,7 @@ function onNextPage() {
 
 function onReadBook(bookId) {
     var book = getBookById(bookId)
-   
+
     var elModal = document.querySelector('.modal')
     elModal.querySelector('h3').innerText = book.name
     elModal.querySelector('h4 span').innerText = book.price + '$'
@@ -111,7 +118,7 @@ function onDeleteBook(bookId) {
 }
 
 function renderMode() {
-    
+
     gMode === 'gallery' ? renderCards() : renderBooks();
 }
 
@@ -193,4 +200,16 @@ function renderFilterByQueryStringParams() {
     document.querySelector('.filter-txt-select').value = filterBy.txt
     document.querySelector('.filter-price-range').value = filterBy.minPrice
     setBookFilter(filterBy)
+}
+
+function onSetLang(lang) {
+    setLang(lang)
+    setDirection(lang)
+    doTrans()
+    renderMode()
+}
+
+function setDirection(lang) {
+    if (lang === 'he') document.body.classList.add('rtl')
+    else document.body.classList.remove('rtl')
 }

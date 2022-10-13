@@ -3,7 +3,7 @@
 const STORAGE_KEY = 'bookDB'
 const gNames = ['Ugly Love', 'My Policeman', 'Im Glad My Mom Died', 'puki', 'Dad sleep', 'Bibi', 'Make money']
 const PAGE_SIZE = 6
-
+const STAR = `<img src="./img/star.png" alt=""></img>`
 
 var gImg1 = `<img src="./img/3.jpg" alt=""></img>`
 var gImg2 = `<img src="./img/2.jpg" alt=""></img>`
