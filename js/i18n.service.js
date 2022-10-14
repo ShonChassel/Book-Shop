@@ -12,7 +12,7 @@ const gTrans = {
         he: 'מחיר'
     },
     'Add-Book': {
-        en: 'Add Book:',
+        en: 'Add Book',
         he: 'הוסף ספר'
     },
     'text-placeholder': {

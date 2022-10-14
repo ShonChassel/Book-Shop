@@ -3,7 +3,6 @@ var gMode;
 
 function onInit() {
     renderFilterByQueryStringParams()
-    doTrans()
     renderBooks()
 
 
@@ -15,7 +14,7 @@ function onInit() {
 
 function renderBooks() {
 
-    // אני עשיתי את זה מאמי לא להתעצבן!!
+   
     var btnName = ['Read', 'Update', 'Delete']
     if (getLang() !== "en") {
         btnName = ['קריאה', 'עדכון', 'מחיקה']
@@ -32,7 +31,7 @@ function renderBooks() {
     var elBooks = document.querySelector('.books-container')
     var books = getBooks()
     console.log(books);
-    // if(gCurrLang === 'he')return
+    
     var strHTML = ''
     books.map((book) => {
         strHTML += `<tr>
@@ -42,10 +41,12 @@ function renderBooks() {
             <td><button class="Read" onclick="onReadBook('${book.id}')">${btnName[0]}</button></td>
             <td><button class="Update" onclick="onUpdateBook('${book.id}')">${btnName[1]}</button></td>
             <td><button class="Delete" onclick="onDeleteBook('${book.id}')">${btnName[2]}</button></td>
+            
         </tr>`
 
     })
     elBooks.innerHTML = strHTML
+    renderPagesBtns()
 }
 
 function onSetFilterBy(filterBy) {
@@ -53,11 +54,16 @@ function onSetFilterBy(filterBy) {
 
 
     renderMode()
+    saveQueryParams()
+    
+}
 
-    // query-params
-    // const queryStringParams = `?minPrice=${filterBy.minPrice}`
-    // const newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname + queryStringParams
-    // window.history.pushState({ path: newUrl }, '', newUrl)
+function saveQueryParams(bookId){
+   var filterBy = getFilterBy()
+// query-params
+    const queryStringParams = `?minPrice=${filterBy.minPrice}&txt=${filterBy.txt}${bookId ? `&openModal=${bookId}`: ''}`
+    const newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname + queryStringParams
+    window.history.pushState({ path: newUrl }, '', newUrl)
 }
 
 function onSetSortBy() {
@@ -90,11 +96,6 @@ function onAddBook() {
     }
 }
 
-function onNextPage() {
-    nextPage()
-    renderMode()
-}
-
 function onReadBook(bookId) {
     var book = getBookById(bookId)
 
@@ -104,6 +105,7 @@ function onReadBook(bookId) {
     elModal.querySelector('h6').innerHTML = book.img
     elModal.querySelector('p').innerText = book.desc
     elModal.classList.add('open')
+    saveQueryParams(bookId)
 
 }
 
@@ -190,22 +192,29 @@ function onUpdateRate(bookId, value) {
 
 function renderFilterByQueryStringParams() {
     const queryStringParams = new URLSearchParams(window.location.search)
+
     const filterBy = {
         minPrice: +queryStringParams.get('minPrice') || 0,
         txt: queryStringParams.get('txt') || '',
+        openModal: queryStringParams.get('openModal') || '',
     }
 
-    if (!filterBy.minPrice && !filterBy.txt) return
+    if (
+        !filterBy.minPrice &&
+         !filterBy.txt &&
+         filterBy.openModal === undefined
+         ) return
 
     document.querySelector('.filter-txt-select').value = filterBy.txt
     document.querySelector('.filter-price-range').value = filterBy.minPrice
     setBookFilter(filterBy)
+    if(filterBy.openModal) onReadBook(filterBy.openModal)
 }
 
 function onSetLang(lang) {
     setLang(lang)
     setDirection(lang)
-    doTrans()
+
     renderMode()
 }
 
@@ -213,3 +222,26 @@ function setDirection(lang) {
     if (lang === 'he') document.body.classList.add('rtl')
     else document.body.classList.remove('rtl')
 }
+
+function renderPagesBtns(){
+    var currPage = getCurrentPage()
+    document.querySelector('.pages').innerHTML = ''
+    var pageNum = 1
+    var numOfPages = getNumOfPages()
+
+    for (let i = 0; i < numOfPages; i++) {
+        document.querySelector('.pages').innerHTML +=
+    `<button onclick="onNumberPageBtn(${pageNum - 1})" class"page-${pageNum}"
+     ${currPage === i ? 'disabled' : ''}>${pageNum}</button>`
+        pageNum++   
+    }
+}
+
+function onNumberPageBtn(id){
+    console.log(id);
+    goToPage(id) 
+    renderMode()
+}
+
+
+  

@@ -14,7 +14,7 @@ var gImg6 = `<img src="./img/6.jpg" alt=""></img>`
 var gImg7 = `<img src="./img/7.jpg" alt=""></img>`
 const gImgs = [gImg1, gImg2, gImg3, gImg4, gImg5, gImg6, gImg7]
 
-var current_page = 0
+var gCurrent_page = 0
 
 var gFilterBy = {
     minPrice: 0,
@@ -25,7 +25,7 @@ var gBooks = []
 _createBooks()
 
 function getBooks() {
-    
+
     // console.log(gPageIdx);
     var books = gBooks
     console.log(gFilterBy);
@@ -37,9 +37,9 @@ function getBooks() {
     } else if (gFilterBy.txt) {
         books = books.filter(book => book.name.toLowerCase().includes(gFilterBy.txt.toLowerCase()))
     }
-  
+
     // Paging:
-    const startIdx = current_page * PAGE_SIZE
+    const startIdx = gCurrent_page * PAGE_SIZE
     books = books.slice(startIdx, startIdx + PAGE_SIZE)
     return books
 }
@@ -75,7 +75,7 @@ function _createBook(name, img = gImgs[getRandomIntInclusive(0, 3)]) {
 function setBookFilter(filterBy = {}) {
     console.log(filterBy);
     if (filterBy.minPrice !== undefined) gFilterBy.minPrice = filterBy.minPrice
-    console.log('gFilterBy',gFilterBy )
+    console.log('gFilterBy', gFilterBy)
     return gFilterBy
 }
 
@@ -105,12 +105,12 @@ function addBook(name) {
 }
 
 function nextPage() {
-    
-    current_page++
-    if (current_page * PAGE_SIZE >= gBooks.length) {
-        current_page = 0
+
+    gCurrent_page++
+    if (gCurrent_page * PAGE_SIZE >= gBooks.length) {
+        gCurrent_page = 0
     }
-    console.log(current_page);
+    console.log(gCurrent_page);
 }
 
 function getBookById(bookId) {
@@ -135,45 +135,45 @@ function _saveBooksToStorage() {
     saveToStorage(STORAGE_KEY, gBooks)
 }
 
+function getFilterBy() {
+    return gFilterBy
+}
+
 function updateRate(bookId, value) {
     var bookIdx = gBooks.findIndex(book => book.id === bookId)
     if (value === '+' && gBooks[bookIdx].rate < 10) {
         gBooks[bookIdx].rate++
+        createStars(gBooks[bookIdx].rate)
+        console.log(gBooks[bookIdx].rate)
     } else if (value === '-' && gBooks[bookIdx].rate > 0) {
         gBooks[bookIdx].rate--
     }
+
     _saveBooksToStorage()
 
 }
 
-// function setupPagination(items, wrapper, rows_per_page) {
-//     let page_count = Math.ceil(items.length / rows_per_page)
-//     for (let i = 1; i < page_count + 1; i++) {
-//         let btn = paginationButton(i)
-//         wrapper.appendChild(btn)
-//     }
-// }
+function createStars(number) {
+    var elStar = document.querySelector('.star')
+    console.log(STAR)
+    elStar.innerHTML = STAR * number
+}
 
+function getCurrentPage() {
+    gCurrent_page
+}
 
-// function paginationButton(page) {
+function getNumOfPages() {
+    console.group(getNumOfPages)
+    console.log(gBooks.length)
+    console.log(PAGE_SIZE)
+    var chek = Math.ceil(gBooks.length / PAGE_SIZE)
+    console.log('chek',chek )
+    console.groupEnd()
+    return chek
+}
 
-//     let button = document.createElement('button')
-//     button.innerText = page
-
-//     if (current_page == page) button.classList.add('active')
-//     button.addEventListener('click', function () {
-//         current_page = page
-        
-
-//         let current_btn = document.querySelector('.pagenumbers button.active')
-//         console.log(current_btn);
-//         current_btn.classList.remove('active')
-
-//         button.classList.add('active')
-//     })
-//     return button
-// }
-
-// var pagination_element = document.getElementById('pageination')
-// setupPagination(gBooks, pagination_element, PAGE_SIZE)
+function goToPage(id) {
+    gCurrent_page = id
+}
 
