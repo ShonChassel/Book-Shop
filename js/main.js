@@ -14,7 +14,7 @@ function onInit() {
 
 function renderBooks() {
 
-   
+
     var btnName = ['Read', 'Update', 'Delete']
     if (getLang() !== "en") {
         btnName = ['קריאה', 'עדכון', 'מחיקה']
@@ -31,7 +31,7 @@ function renderBooks() {
     var elBooks = document.querySelector('.books-container')
     var books = getBooks()
     console.log(books);
-    
+
     var strHTML = ''
     books.map((book) => {
         strHTML += `<tr>
@@ -41,7 +41,7 @@ function renderBooks() {
             <td><button class="Read" onclick="onReadBook('${book.id}')">${btnName[0]}</button></td>
             <td><button class="Update" onclick="onUpdateBook('${book.id}')">${btnName[1]}</button></td>
             <td><button class="Delete" onclick="onDeleteBook('${book.id}')">${btnName[2]}</button></td>
-            
+            <td>${book.rate}</td>
         </tr>`
 
     })
@@ -55,16 +55,17 @@ function onSetFilterBy(filterBy) {
 
     renderMode()
     saveQueryParams()
-    
+
 }
 
-function saveQueryParams(bookId){
-   var filterBy = getFilterBy()
-// query-params
-    const queryStringParams = `?minPrice=${filterBy.minPrice}&txt=${filterBy.txt}${bookId ? `&openModal=${bookId}`: ''}`
+function saveQueryParams(bookId) {
+    var filterBy = getFilterBy()
+    // query-params
+    const queryStringParams = `?minPrice=${filterBy.minPrice}&txt=${filterBy.txt}${bookId ? `&openModal=${bookId}` : ''}`
     const newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname + queryStringParams
     window.history.pushState({ path: newUrl }, '', newUrl)
 }
+
 
 function onSetSortBy() {
     const prop = document.querySelector('.sort-by').value
@@ -161,18 +162,22 @@ function renderCards() {
     var books = getBooks()
     var elModes = document.querySelector('.modes-container')
     elModes.style.display = 'flex'
-
-    var strHTML = books.map(book => `
+    var strHTML = '';
+    books.map(book => {
+        strHTML += `
     <article class="books-preview">
         <button class="btn-remove" onclick="onDeleteBook('${book.id}')">X</button>
         <div class="img-gallery">${book.img}</div>
-        <h5>${book.name}</h5>
-        <div ><button class="btn" onclick="onUpdateRate('${book.id}','${'-'}')">-</button>${book.rate}<button class="btn" onclick="onUpdateRate('${book.id}','${'+'}')">+</button></div>
+        <h5>${book.name}</h5>`
+        for (let i = 0; i < book.rate; i++) {
+            strHTML += '<img src="./img/star.png" alt="" class="star">'
+        }
+        strHTML += `<div ><button class="btn" onclick="onUpdateRate('${book.id}','${'-'}')">-</button>${book.rate}<button class="btn" onclick="onUpdateRate('${book.id}','${'+'}')">+</button></div>
         <div><span>${book.price}$</div>
         <button onclick="onReadBook('${book.id}')">Read</button>
         <button onclick="onUpdateBook('${book.id}')">Update</button>
     </article> 
-    ` )
+    ` })
     elModes.innerHTML = strHTML
 }
 
@@ -201,20 +206,20 @@ function renderFilterByQueryStringParams() {
 
     if (
         !filterBy.minPrice &&
-         !filterBy.txt &&
-         filterBy.openModal === undefined
-         ) return
+        !filterBy.txt &&
+        filterBy.openModal === undefined
+    ) return
 
     document.querySelector('.filter-txt-select').value = filterBy.txt
     document.querySelector('.filter-price-range').value = filterBy.minPrice
     setBookFilter(filterBy)
-    if(filterBy.openModal) onReadBook(filterBy.openModal)
+    if (filterBy.openModal) onReadBook(filterBy.openModal)
 }
 
 function onSetLang(lang) {
     setLang(lang)
     setDirection(lang)
-
+    doTrans()
     renderMode()
 }
 
@@ -223,7 +228,7 @@ function setDirection(lang) {
     else document.body.classList.remove('rtl')
 }
 
-function renderPagesBtns(){
+function renderPagesBtns() {
     var currPage = getCurrentPage()
     document.querySelector('.pages').innerHTML = ''
     var pageNum = 1
@@ -231,17 +236,16 @@ function renderPagesBtns(){
 
     for (let i = 0; i < numOfPages; i++) {
         document.querySelector('.pages').innerHTML +=
-    `<button onclick="onNumberPageBtn(${pageNum - 1})" class"page-${pageNum}"
+            `<button onclick="onNumberPageBtn(${pageNum - 1})" class"page-${pageNum}"
      ${currPage === i ? 'disabled' : ''}>${pageNum}</button>`
-        pageNum++   
+        pageNum++
     }
 }
 
-function onNumberPageBtn(id){
+function onNumberPageBtn(id) {
     console.log(id);
-    goToPage(id) 
+    goToPage(id)
     renderMode()
 }
 
 
-  

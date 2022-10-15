@@ -143,8 +143,7 @@ function updateRate(bookId, value) {
     var bookIdx = gBooks.findIndex(book => book.id === bookId)
     if (value === '+' && gBooks[bookIdx].rate < 10) {
         gBooks[bookIdx].rate++
-        createStars(gBooks[bookIdx].rate)
-        console.log(gBooks[bookIdx].rate)
+        
     } else if (value === '-' && gBooks[bookIdx].rate > 0) {
         gBooks[bookIdx].rate--
     }
@@ -164,12 +163,7 @@ function getCurrentPage() {
 }
 
 function getNumOfPages() {
-    console.group(getNumOfPages)
-    console.log(gBooks.length)
-    console.log(PAGE_SIZE)
     var chek = Math.ceil(gBooks.length / PAGE_SIZE)
-    console.log('chek',chek )
-    console.groupEnd()
     return chek
 }
 

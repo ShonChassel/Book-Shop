@@ -88,6 +88,10 @@ table{
   gap: 20px;
 }
 
+img.star{
+  width: 20px !important;
+  height: 20px !important;
+}
 .filter-name-range {
   text-transform: capitalize;
 }
