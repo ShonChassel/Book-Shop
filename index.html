@@ -51,6 +51,16 @@
       </section>
       <button data-trans="Add-Book" title="Add Book" onclick="onAddBook() ">Add Book</button>
 
+      <div class="add-book-modal">
+        <button class="close-add-book" onclick="onCloseAddModal()">X</button>
+        <h2>Book name</h2>
+        <input id="bookname" type="text" placeholder="Enter Bookname" />
+        <h2>price</h2>
+        <div><input id="price" type="text" placeholder="Enter Price" /></div>
+        <button onclick="onAddBook()">Add Book</button>
+      </div>
+      
+
       <select onchange="onSetLang(this.value)">
         <option value="en">English</option>
         <option value="he">עברית</option>

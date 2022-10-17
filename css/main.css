@@ -63,6 +63,38 @@ table{
   width: 0px;
 }
 
+.add-book-modal{
+  display: none;
+  position: absolute;
+  background-color: rgb(165, 143, 114);
+  padding: 10px;
+  top: 0px;
+  right:50vh;
+  height: 30vh;
+  min-width: 300px;
+  text-align: center;
+  width: 0px;
+  margin-top: 200px;
+  border-radius: 9px;
+}
+.close-add-book{
+  float: right;
+}
+.Update-book-modal{
+  display: none;
+  position: absolute;
+  background-color: rgb(165, 143, 114);
+  padding: 10px;
+  top: 0px;
+  right:50vh;
+  height: 30vh;
+  min-width: 300px;
+  text-align: center;
+  width: 0px;
+  margin-top: 200px;
+  border-radius: 9px;
+}
+
 .title {
   background-color: antiquewhite;
 }

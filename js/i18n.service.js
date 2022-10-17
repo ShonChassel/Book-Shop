@@ -91,3 +91,17 @@ function setLang(lang) {
 function getLang() {
     return gCurrLang
 }
+
+function currencyChange(lang, num){
+    var options = {
+        style: 'currency',
+    } 
+    
+    if (lang === 'he') {
+        num *= 3.23
+        options.currency = 'ILS'
+    } else {
+        options.currency = 'USD'
+    }
+    return new Intl.NumberFormat(lang, options).format(num)
+}

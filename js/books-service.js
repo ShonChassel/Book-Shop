@@ -61,11 +61,11 @@ function _createBooks() {
     _saveBooksToStorage()
 }
 
-function _createBook(name, img = gImgs[getRandomIntInclusive(0, 3)]) {
+function _createBook(name,price = getRandomIntInclusive(50, 250), img = gImgs[getRandomIntInclusive(0, 3)]) {
     return {
         id: generateId(5),
         name: name,
-        price: getRandomIntInclusive(50, 250),
+        price: price,
         desc: makeLorem(),
         img: img,
         rate: 0,
@@ -96,8 +96,8 @@ function setFilterByTxt(txt) {
     gFilterBy.txt = txt
 }
 
-function addBook(name) {
-    const book = _createBook(name)
+function addBook(name,price) {
+    const book = _createBook(name,price)
     gBooks.unshift(book)
     _saveBooksToStorage()
     console.log(gBooks)
@@ -143,7 +143,7 @@ function updateRate(bookId, value) {
     var bookIdx = gBooks.findIndex(book => book.id === bookId)
     if (value === '+' && gBooks[bookIdx].rate < 10) {
         gBooks[bookIdx].rate++
-        
+
     } else if (value === '-' && gBooks[bookIdx].rate > 0) {
         gBooks[bookIdx].rate--
     }

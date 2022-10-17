@@ -5,7 +5,7 @@ function onInit() {
     renderFilterByQueryStringParams()
     renderBooks()
 
-
+//!סיאר!!! למחוק כומנטים מיותרים
     // query-params
     // const queryStringParams = ``
     // const newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname + queryStringParams
@@ -21,13 +21,14 @@ function renderBooks() {
     }
 
     // gMode = 'table'
-    var elTable = document.querySelector('table')
+    //!סיאר!! לשים בתור משתנה גלובלי כיוון שאתה משתמש בו בעוד מקום
+    var elTable = document.querySelector('table') 
     elTable.style.display = 'block'
     elTable.style.display = ''
-
+ //!סיאר!! לשים בתור משתנה גלובלי כיוון שאתה משתמש בו בעוד מקום
     var elModes = document.querySelector('.modes-container')
     elModes.style.display = 'none'
-
+//!סיאר!! יכול להשתמש ישירות  באלמנט עצמו ולא להגדיר אותו  אתה משתמש בו פעם 1
     var elBooks = document.querySelector('.books-container')
     var books = getBooks()
     console.log(books);
@@ -37,7 +38,7 @@ function renderBooks() {
         strHTML += `<tr>
             <td>${book.id}</td>
             <td>${book.name}</td>
-            <td>${book.price}$</td>
+            <td>${currencyChange(getLang(), book.price)}</td>
             <td><button class="Read" onclick="onReadBook('${book.id}')">${btnName[0]}</button></td>
             <td><button class="Update" onclick="onUpdateBook('${book.id}')">${btnName[1]}</button></td>
             <td><button class="Delete" onclick="onDeleteBook('${book.id}')">${btnName[2]}</button></td>
@@ -45,6 +46,8 @@ function renderBooks() {
         </tr>`
 
     })
+
+    //!סיאר!! יכול להשתמש ישירות  באלמנט עצמו ולא להגדיר אותו  אתה משתמש בו פעם 1
     elBooks.innerHTML = strHTML
     renderPagesBtns()
 }
@@ -52,7 +55,7 @@ function renderBooks() {
 function onSetFilterBy(filterBy) {
     filterBy = setBookFilter(filterBy)
 
-
+//!למחוק רווח מיותר סיאר!!!!
     renderMode()
     saveQueryParams()
 
@@ -66,11 +69,10 @@ function saveQueryParams(bookId) {
     window.history.pushState({ path: newUrl }, '', newUrl)
 }
 
-
 function onSetSortBy() {
     const prop = document.querySelector('.sort-by').value
     const isDesc = document.querySelector('.sort-desc').checked
-
+//!למחוק קומנטים ורווחים מיותרים
     // const sortBy = {}
     // sortBy[prop] = (isDesc)? -1 : 1
 
@@ -78,6 +80,7 @@ function onSetSortBy() {
     const sortBy = {
         [prop]: (isDesc) ? -1 : 1
     }
+    //!למחוק קונוסל לוג
     console.log('', sortBy)
     setBookSort(sortBy)
     renderMode()
@@ -89,12 +92,23 @@ function onSetSortBy() {
 }
 
 function onAddBook() {
-    var name = prompt('name?', 'My Policeman')
-    if (name) {
-        const book = addBook(name)
+    var elBookModal = document.querySelector('.add-book-modal')
+    elBookModal.style.display = 'block'
+
+    var bookName = document.getElementById('bookname').value
+    var price = document.getElementById('price').value
+    if (bookName) {
+        const book = addBook(bookName,price)
         renderMode()
         flashMsg(`Book Added (id: ${book.id})`)
+        
     }
+    
+}
+
+function onCloseAddModal() {
+    var elClose = document.querySelector('.add-book-modal')
+    elClose.style.display = 'none'
 }
 
 function onReadBook(bookId) {
@@ -137,6 +151,7 @@ function flashMsg(msg) {
 function onUpdateBook(bookId) {
     const book = getBookById(bookId)
     var newPrice = +prompt('Price?', book.price)
+    
     if (newPrice && book.price !== newPrice) {
         const book = updateBook(bookId, newPrice)
         renderBooks()
@@ -155,6 +170,12 @@ function onChangeMode(mode) {
 }
 
 function renderCards() {
+
+    var btnName = ['Read', 'Update',]
+    if (getLang() !== "en") {
+        btnName = ['קריאה', 'עדכון',]
+    }
+
     // gMode = 'gallery'
     var elTable = document.querySelector('table')
     elTable.style.display = 'none'
@@ -174,8 +195,8 @@ function renderCards() {
         }
         strHTML += `<div ><button class="btn" onclick="onUpdateRate('${book.id}','${'-'}')">-</button>${book.rate}<button class="btn" onclick="onUpdateRate('${book.id}','${'+'}')">+</button></div>
         <div><span>${book.price}$</div>
-        <button onclick="onReadBook('${book.id}')">Read</button>
-        <button onclick="onUpdateBook('${book.id}')">Update</button>
+        <button onclick="onReadBook('${book.id}')">${btnName[0]}</button>
+        <button onclick="onUpdateBook('${book.id}')">${btnName[1]}</button>
     </article> 
     ` })
     elModes.innerHTML = strHTML
