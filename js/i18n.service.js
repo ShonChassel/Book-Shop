@@ -74,7 +74,7 @@ function getTrans(transKey) {
 
 function doTrans() {
     const els = document.querySelectorAll('[data-trans]')
-    console.log(els);
+
     els.forEach(el => {
         const transKey = el.dataset.trans
         const trans = getTrans(transKey)
@@ -96,7 +96,7 @@ function currencyChange(lang, num){
     var options = {
         style: 'currency',
     } 
-    
+
     if (lang === 'he') {
         num *= 3.23
         options.currency = 'ILS'

@@ -126,37 +126,15 @@
         <option value="en">English</option>
         <option value="he">עברית</option>
       </select>
-      <section class="book-filter2">
-        <select class="sort-by" onchange="onSetSortBy()">
-          <option data-trans="select" value="">Select Sorting</option>
-          <option data-trans="name" value="name">By Name</option>
-          <option data-trans="price" value="maxPrice">Price</option>
-          <option data-trans="rate" value="rate">Rate</option>
-        </select>
-        <div>
-        <label data-trans="Descending-box"> Descending </label>
-        <input class="sort-desc" type="checkbox" oninput="onSetSortBy()" />
-      </div>
-        <label>
-          <input
-            type="text"
-            class="filter-txt-select"
-            oninput="onSetFilterByTxt(this.value)"
-            placeholder="Search..."
-            data-trans="text-placeholder"
-          />
-        </label>
-
-        <label data-trans="filter-price"> price: </label>
-        <input
-          type="range"
-          min="0"
-          max="300"
-          value="100"
-          class="filter-price-range"
-          onchange="this.title=this.value;onSetFilterBy({minPrice: this.value})"
-        />
-      </section>
+       
+          <select class="sort-by" onchange="onSetSortBy()">
+            <option data-trans="select" value="">Select Sorting</option>
+            <option data-trans="name" value="name">By Name</option>
+            <option data-trans="price" value="maxPrice">Price</option>
+            <option data-trans="rate" value="rate">Rate</option>
+          </select>
+          <input class="sort-desc" type="checkbox" oninput="onSetSortBy()" />
+   
     </div>
 
     <script src="./js/i18n.service.js"></script>

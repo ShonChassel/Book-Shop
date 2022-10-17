@@ -55,8 +55,6 @@ function renderBooks() {
 
 function onSetFilterBy(filterBy) {
     filterBy = setBookFilter(filterBy)
-
-    //!למחוק רווח מיותר סיאר!!!!
     renderMode()
     saveQueryParams()
 
@@ -64,7 +62,7 @@ function onSetFilterBy(filterBy) {
 
 function saveQueryParams(bookId) {
     var filterBy = getFilterBy()
-    // query-params
+   
     const queryStringParams = `?minPrice=${filterBy.minPrice}&txt=${filterBy.txt}${bookId ? `&openModal=${bookId}` : ''}`
     const newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname + queryStringParams
     window.history.pushState({ path: newUrl }, '', newUrl)
@@ -81,8 +79,6 @@ function onSetSortBy() {
     const sortBy = {
         [prop]: (isDesc) ? -1 : 1
     }
-    //!למחוק קונוסל לוג
-    console.log('', sortBy)
     setBookSort(sortBy)
     renderMode()
 
@@ -110,6 +106,8 @@ function onAddBook() {
 function onCloseAddModal() {
     var elClose = document.querySelector('.add-book-modal')
     elClose.style.display = 'none'
+
+
 }
 
 function onReadBook(bookId) {
@@ -122,12 +120,13 @@ function onReadBook(bookId) {
     elModal.querySelector('h6').innerHTML = book.img
     elModal.querySelector('p').innerText = book.desc
     elModal.classList.add('open')
-    saveQueryParams(bookId)
-
+    
+    setQueryParams(bookId, true)
 }
 
 function onCloseModal() {
     document.querySelector('.modal').classList.remove('open')
+    setQueryParams()
 }
 
 function onDeleteBook(bookId) {
@@ -280,4 +279,12 @@ function showHamburger() {
         isShown = true
         elSideBar.style.width = "0px"
     }
+}
+
+function setQueryParams( bookId, isModal = false){
+    var filterBy = getFilterBy()
+    var currLang = getLang()
+    const queryStringParams = `?lang=${currLang}&minPrice=${filterBy.minPrice}&txt=${filterBy.txt}${isModal ? `&openModal=${bookId}` : ''}`
+    const newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname + queryStringParams
+    window.history.pushState({ path: newUrl }, '', newUrl)
 }
