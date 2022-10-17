@@ -7,50 +7,50 @@
     <title>Books Shop</title>
     <link rel="stylesheet" href="./css/main.css" />
     <!-- CSS only -->
-<!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
+    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
  rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
   crossorigin="anonymous"> -->
   </head>
   <body onload="onInit()">
-    <nav>
+    <nav class="nav-container">
       <img class="logo" src="./img/logo.png" alt="" />
+
       <section class="book-filter">
         <div class="sort-filter-container">
-          <span data-trans="Sort-by">Sort by:</span> 
+          <span data-trans="Sort-by">Sort by:</span>
           <select class="sort-by" onchange="onSetSortBy()">
             <option data-trans="select" value="">Select Sorting</option>
             <option data-trans="name" value="name">By Name</option>
             <option data-trans="price" value="maxPrice">Price</option>
             <option data-trans="rate" value="rate">Rate</option>
           </select>
-          <label data-trans="Descending-box">
-            Descending
-          </label>
+          <label data-trans="Descending-box"> Descending </label>
           <input class="sort-desc" type="checkbox" oninput="onSetSortBy()" />
           <label>
             <input
-            type="text"
-            class="filter-txt-select"
-            oninput="onSetFilterByTxt(this.value)"
-            placeholder="Search..."
-            data-trans="text-placeholder"
+              type="text"
+              class="filter-txt-select"
+              oninput="onSetFilterByTxt(this.value)"
+              placeholder="Search..."
+              data-trans="text-placeholder"
             />
           </label>
         </div>
-        <label data-trans="filter-price">
-          price:
-        </label>
+        <label data-trans="filter-price"> price: </label>
         <input
-            type="range"
-            min="0"
-            max="300"
-            value="100"
-            class="filter-price-range"
-            onchange="this.title=this.value;onSetFilterBy({minPrice: this.value})"
-          />
+          type="range"
+          min="0"
+          max="300"
+          value="100"
+          class="filter-price-range"
+          onchange="this.title=this.value;onSetFilterBy({minPrice: this.value})"
+        />
       </section>
-      <button data-trans="Add-Book" title="Add Book" onclick="onAddBook() ">Add Book</button>
-
+      <div class="Add-Book">
+        <button data-trans="Add-Book" title="Add Book" onclick="onAddBook() ">
+          Add Book
+        </button>
+      </div>
       <div class="add-book-modal">
         <button class="close-add-book" onclick="onCloseAddModal()">X</button>
         <h2>Book name</h2>
@@ -59,12 +59,11 @@
         <div><input id="price" type="text" placeholder="Enter Price" /></div>
         <button onclick="onAddBook()">Add Book</button>
       </div>
-      
 
-      <select onchange="onSetLang(this.value)">
+      <select class="set-lang" onchange="onSetLang(this.value)">
         <option value="en">English</option>
         <option value="he">עברית</option>
-    </select>
+      </select>
 
       <div class="btn-modes-container">
         <img
@@ -80,41 +79,86 @@
           alt=""
         />
       </div>
+      <img
+        class="hamburger-icon"
+        onclick="showHamburger()"
+        src="./img/amburger.png"
+        alt=""
+      />
     </nav>
-<div class="main">
-    <h1 data-trans="title">Welcome to Books Shop</h1>
 
-    <div class="modal">
-      <h3></h3>
-      <h4>Price <span></span></h4>
-      <h5>Book Description</h5>
-      <h6></h6>
-      <p></p>
-      <button onclick="onCloseModal()">Close</button>
+    <div class="main">
+      <h1 data-trans="title">Welcome to Books Shop</h1>
+
+      <div class="modal">
+        <h3></h3>
+        <h4>Price <span></span></h4>
+        <h5>Book Description</h5>
+        <h6></h6>
+        <p></p>
+        <button onclick="onCloseModal()">Close</button>
+      </div>
+
+      <section class="modes-container"></section>
+
+      <table>
+        <thead>
+          <tr class="title">
+            <td data-trans="Id">Id</td>
+            <td data-trans="Title">Title</td>
+            <td data-trans="Price">Price</td>
+            <td data-trans="Actions" colspan="3">Actions</td>
+            <td data-trans="rate">Rate</td>
+          </tr>
+        </thead>
+        <tbody class="books-container"></tbody>
+      </table>
     </div>
 
-    <section class="modes-container"></section>
-
-    <table>
-        <thead>
-            <tr class="title">
-              <td data-trans="Id">Id</td>
-              <td data-trans="Title">Title</td>
-              <td data-trans="Price">Price</td>
-              <td data-trans="Actions" colspan="3">Actions</td>
-              <td data-trans="rate">Rate</td>
-            </tr>
-          </thead>
-      <tbody class="books-container"></tbody>
-    </table>
-</div>
-
-  <div class="next-page-container">   
-    <div class="pages"></div>
-  </div>
+    <div class="next-page-container">
+      <div class="pages"></div>
+    </div>
 
     <div class="user-msg"></div>
-  
+
+    <div class="side-bar">
+      <select class="set-langu" onchange="onSetLang(this.value)">
+        <option value="en">English</option>
+        <option value="he">עברית</option>
+      </select>
+      <section class="book-filter2">
+        <select class="sort-by" onchange="onSetSortBy()">
+          <option data-trans="select" value="">Select Sorting</option>
+          <option data-trans="name" value="name">By Name</option>
+          <option data-trans="price" value="maxPrice">Price</option>
+          <option data-trans="rate" value="rate">Rate</option>
+        </select>
+        <div>
+        <label data-trans="Descending-box"> Descending </label>
+        <input class="sort-desc" type="checkbox" oninput="onSetSortBy()" />
+      </div>
+        <label>
+          <input
+            type="text"
+            class="filter-txt-select"
+            oninput="onSetFilterByTxt(this.value)"
+            placeholder="Search..."
+            data-trans="text-placeholder"
+          />
+        </label>
+
+        <label data-trans="filter-price"> price: </label>
+        <input
+          type="range"
+          min="0"
+          max="300"
+          value="100"
+          class="filter-price-range"
+          onchange="this.title=this.value;onSetFilterBy({minPrice: this.value})"
+        />
+      </section>
+    </div>
+
     <script src="./js/i18n.service.js"></script>
     <script src="./js/utils.js"></script>
     <script src="./js/storage.service.js"></script>

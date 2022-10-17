@@ -1,3 +1,5 @@
+/* @import"./mobile.css" screen and (max-width: 600px); */
+
 body.rtl {
   direction: rtl;
 }
@@ -23,7 +25,7 @@ button {
   transition: all 0.3s ease 0s;
 }
 
-nav{
+nav {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -45,7 +47,7 @@ h1 {
   margin-top: 50px;
 }
 
-table{
+table {
   margin: 0 auto;
   margin-top: 100px;
 }
@@ -63,13 +65,13 @@ table{
   width: 0px;
 }
 
-.add-book-modal{
+.add-book-modal {
   display: none;
   position: absolute;
   background-color: rgb(165, 143, 114);
   padding: 10px;
   top: 0px;
-  right:50vh;
+  right: 50vh;
   height: 30vh;
   min-width: 300px;
   text-align: center;
@@ -77,16 +79,16 @@ table{
   margin-top: 200px;
   border-radius: 9px;
 }
-.close-add-book{
+.close-add-book {
   float: right;
 }
-.Update-book-modal{
+.Update-book-modal {
   display: none;
   position: absolute;
   background-color: rgb(165, 143, 114);
   padding: 10px;
   top: 0px;
-  right:50vh;
+  right: 50vh;
   height: 30vh;
   min-width: 300px;
   text-align: center;
@@ -108,19 +110,18 @@ table{
   margin: 20px;
 }
 
-.btn-modes-container{
+.btn-modes-container {
   display: flex;
   align-items: center;
   gap: 10px;
-  
 }
 
-.sort-filter-container{
+.sort-filter-container {
   display: flex;
   gap: 20px;
 }
 
-img.star{
+img.star {
   width: 20px !important;
   height: 20px !important;
 }
@@ -184,11 +185,11 @@ img.star{
   color: #111;
 }
 
-.btn{
-border: 1px solid rgba(0, 0, 0, 0.377);
-border-radius: 10px;
-background-color: rgba(20, 20, 20, 0);
-color: #111;
+.btn {
+  border: 1px solid rgba(0, 0, 0, 0.377);
+  border-radius: 10px;
+  background-color: rgba(20, 20, 20, 0);
+  color: #111;
 }
 
 .books-preview img {
@@ -251,28 +252,65 @@ color: #111;
   transition: bottom 0.5s;
 }
 
-.next-page-container{
+.next-page-container {
   height: 8vh;
 }
 
-.next-page{
+.next-page {
   background-color: rgba(15, 15, 15, 0);
   color: #111;
   margin-top: 10px;
   border: 1px solid rgba(0, 0, 0, 0.267);
 }
 
-.logo{
+.logo {
   height: 50px;
 }
 
-.main{
+.main {
   height: 80vh;
 }
 
-/* .pagenumbers button:hover{
-  background-color: aqua;
+.hamburger-icon {
+  display: none;
+  width: 30px;
 }
-.pagenumbers button.active{
-  background-color: aqua;
-} */
+.side-bar{
+  display: none;
+}
+
+@media only screen and (max-width: 1140px) {
+  .hamburger-icon {
+    display: block;
+    display: flex;
+    /* position: absolute; */
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+  }
+
+  .book-filter {
+    display: none;
+  }
+  .Add-Book{
+    display: none;
+  }
+  .set-lang{
+    display: none;
+  }
+  .btn-modes-container{
+    display: none;
+  }
+  .side-bar {
+    display: block;
+    position: absolute;
+    height: 100vh;
+    background-color: rgba(252, 252, 252, 0.678);
+    width: 0px;
+    top: 78px;
+    right: 0;
+    float: right;
+    transition: width 1s;
+    box-shadow: -4px 1px 19px 0px;
+  }
+}

@@ -1,11 +1,12 @@
 'use strict'
 var gMode;
+var isShown = false
 
 function onInit() {
     renderFilterByQueryStringParams()
     renderBooks()
 
-//!סיאר!!! למחוק כומנטים מיותרים
+    //!סיאר!!! למחוק כומנטים מיותרים
     // query-params
     // const queryStringParams = ``
     // const newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname + queryStringParams
@@ -22,13 +23,13 @@ function renderBooks() {
 
     // gMode = 'table'
     //!סיאר!! לשים בתור משתנה גלובלי כיוון שאתה משתמש בו בעוד מקום
-    var elTable = document.querySelector('table') 
+    var elTable = document.querySelector('table')
     elTable.style.display = 'block'
     elTable.style.display = ''
- //!סיאר!! לשים בתור משתנה גלובלי כיוון שאתה משתמש בו בעוד מקום
+    //!סיאר!! לשים בתור משתנה גלובלי כיוון שאתה משתמש בו בעוד מקום
     var elModes = document.querySelector('.modes-container')
     elModes.style.display = 'none'
-//!סיאר!! יכול להשתמש ישירות  באלמנט עצמו ולא להגדיר אותו  אתה משתמש בו פעם 1
+    //!סיאר!! יכול להשתמש ישירות  באלמנט עצמו ולא להגדיר אותו  אתה משתמש בו פעם 1
     var elBooks = document.querySelector('.books-container')
     var books = getBooks()
     console.log(books);
@@ -55,7 +56,7 @@ function renderBooks() {
 function onSetFilterBy(filterBy) {
     filterBy = setBookFilter(filterBy)
 
-//!למחוק רווח מיותר סיאר!!!!
+    //!למחוק רווח מיותר סיאר!!!!
     renderMode()
     saveQueryParams()
 
@@ -72,7 +73,7 @@ function saveQueryParams(bookId) {
 function onSetSortBy() {
     const prop = document.querySelector('.sort-by').value
     const isDesc = document.querySelector('.sort-desc').checked
-//!למחוק קומנטים ורווחים מיותרים
+    //!למחוק קומנטים ורווחים מיותרים
     // const sortBy = {}
     // sortBy[prop] = (isDesc)? -1 : 1
 
@@ -98,12 +99,12 @@ function onAddBook() {
     var bookName = document.getElementById('bookname').value
     var price = document.getElementById('price').value
     if (bookName) {
-        const book = addBook(bookName,price)
+        const book = addBook(bookName, price)
         renderMode()
         flashMsg(`Book Added (id: ${book.id})`)
-        
+
     }
-    
+
 }
 
 function onCloseAddModal() {
@@ -112,6 +113,7 @@ function onCloseAddModal() {
 }
 
 function onReadBook(bookId) {
+    showHamburger()
     var book = getBookById(bookId)
 
     var elModal = document.querySelector('.modal')
@@ -151,7 +153,7 @@ function flashMsg(msg) {
 function onUpdateBook(bookId) {
     const book = getBookById(bookId)
     var newPrice = +prompt('Price?', book.price)
-    
+
     if (newPrice && book.price !== newPrice) {
         const book = updateBook(bookId, newPrice)
         renderBooks()
@@ -269,4 +271,13 @@ function onNumberPageBtn(id) {
     renderMode()
 }
 
-
+function showHamburger() {
+    var elSideBar = document.querySelector('.side-bar')
+    if (isShown) {
+        elSideBar.style.width = "200px"
+        isShown = false
+    } else {
+        isShown = true
+        elSideBar.style.width = "0px"
+    }
+}
