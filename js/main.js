@@ -21,15 +21,13 @@ function renderBooks() {
         btnName = ['קריאה', 'עדכון', 'מחיקה']
     }
 
-    // gMode = 'table'
-    //!סיאר!! לשים בתור משתנה גלובלי כיוון שאתה משתמש בו בעוד מקום
     var elTable = document.querySelector('table')
     elTable.style.display = 'block'
     elTable.style.display = ''
-    //!סיאר!! לשים בתור משתנה גלובלי כיוון שאתה משתמש בו בעוד מקום
+   
     var elModes = document.querySelector('.modes-container')
     elModes.style.display = 'none'
-    //!סיאר!! יכול להשתמש ישירות  באלמנט עצמו ולא להגדיר אותו  אתה משתמש בו פעם 1
+
     var elBooks = document.querySelector('.books-container')
     var books = getBooks()
     console.log(books);
@@ -48,7 +46,7 @@ function renderBooks() {
 
     })
 
-    //!סיאר!! יכול להשתמש ישירות  באלמנט עצמו ולא להגדיר אותו  אתה משתמש בו פעם 1
+
     elBooks.innerHTML = strHTML
     renderPagesBtns()
 }
@@ -56,16 +54,6 @@ function renderBooks() {
 function onSetFilterBy(filterBy) {
     filterBy = setBookFilter(filterBy)
     renderMode()
-    saveQueryParams()
-
-}
-
-function saveQueryParams(bookId) {
-    var filterBy = getFilterBy()
-   
-    const queryStringParams = `?minPrice=${filterBy.minPrice}&txt=${filterBy.txt}${bookId ? `&openModal=${bookId}` : ''}`
-    const newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname + queryStringParams
-    window.history.pushState({ path: newUrl }, '', newUrl)
 }
 
 function onSetSortBy() {
@@ -107,7 +95,6 @@ function onCloseAddModal() {
     var elClose = document.querySelector('.add-book-modal')
     elClose.style.display = 'none'
 
-
 }
 
 function onReadBook(bookId) {
@@ -120,7 +107,7 @@ function onReadBook(bookId) {
     elModal.querySelector('h6').innerHTML = book.img
     elModal.querySelector('p').innerText = book.desc
     elModal.classList.add('open')
-    
+
     setQueryParams(bookId, true)
 }
 
@@ -150,14 +137,33 @@ function flashMsg(msg) {
 }
 
 function onUpdateBook(bookId) {
+    
     const book = getBookById(bookId)
-    var newPrice = +prompt('Price?', book.price)
+    var elUpdate = document.querySelector('.update-book-modal')
+    elUpdate.style.display = 'block'
+    var elUpdateModal = document.querySelector('.update-container')
+    
+    elUpdateModal.innerHTML =   `
+    <form action="" method="post" id="BookPackageForm" >
+    <h2>update name</h2>
+    <input id="updateName" name="name" value="${book.name}"  type="text" placeholder="Enter Book name" />
+    <h2>update price</h2>
+    <div><input id="updatePrice" name="price" value="${book.price}" type="text" placeholder="Enter Price" /></div></form>
+    <button onclick="getUpdateModal(\'${book.id}\')" >update Book </button>
+    ` 
+}
 
-    if (newPrice && book.price !== newPrice) {
-        const book = updateBook(bookId, newPrice)
-        renderBooks()
-        flashMsg(`Price updated to: ${book.price}`)
-    }
+function getUpdateModal(bookId){
+    var formEl = document.forms.BookPackageForm;
+    var formData = new FormData(formEl);
+    var newName = formData.get('name');
+    var newPrice = formData.get('price');
+    updateBook(bookId,newName,newPrice)
+}
+
+function onCloseUpdateModal(){
+    var elCloseUpdateModal = document.querySelector('.update-book-modal')
+    elCloseUpdateModal.style.display = 'none'
 }
 
 function onLoadAdmin() {
@@ -281,9 +287,10 @@ function showHamburger() {
     }
 }
 
-function setQueryParams( bookId, isModal = false){
+function setQueryParams(bookId, isModal = false) {
     var filterBy = getFilterBy()
     var currLang = getLang()
+
     const queryStringParams = `?lang=${currLang}&minPrice=${filterBy.minPrice}&txt=${filterBy.txt}${isModal ? `&openModal=${bookId}` : ''}`
     const newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname + queryStringParams
     window.history.pushState({ path: newUrl }, '', newUrl)

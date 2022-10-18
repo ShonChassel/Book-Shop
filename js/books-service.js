@@ -124,11 +124,14 @@ function deleteBook(bookId) {
     _saveBooksToStorage()
 }
 
-function updateBook(bookId, newPrice) {
+function updateBook(bookId,newName,newPrice) {
+   
+
     const book = gBooks.find(book => book.id === bookId)
     book.price = newPrice
+    book.name = newName
     _saveBooksToStorage()
-    return book
+    renderMode()
 }
 
 function _saveBooksToStorage() {

@@ -82,7 +82,7 @@ table {
 .close-add-book {
   float: right;
 }
-.Update-book-modal {
+.update-book-modal {
   display: none;
   position: absolute;
   background-color: rgb(165, 143, 114);

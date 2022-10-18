@@ -60,6 +60,8 @@
         <button onclick="onAddBook()">Add Book</button>
       </div>
 
+      
+
       <select class="set-lang" onchange="onSetLang(this.value)">
         <option value="en">English</option>
         <option value="he">עברית</option>
@@ -134,9 +136,11 @@
             <option data-trans="rate" value="rate">Rate</option>
           </select>
           <input class="sort-desc" type="checkbox" oninput="onSetSortBy()" />
-   
     </div>
-
+    <div class="update-book-modal">
+    <button onclick="onCloseUpdateModal()">X</button>
+    <div class="update-container"></div>
+    </div>
     <script src="./js/i18n.service.js"></script>
     <script src="./js/utils.js"></script>
     <script src="./js/storage.service.js"></script>
